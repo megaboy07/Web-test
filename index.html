@@ -1,14 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to the jungle</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From Root to Cloud | ورشة عملية</title>
+  <meta name="description" content="ورشة عملية: من أول ملف في VS Code إلى موقع يعمل على الإنترنت.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=IBM+Plex+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome to the jungle</h1>
-  <button id="enter" type="button">Enter</button>
+  <div class="sky" aria-hidden="true">
+    <span class="cloud c1"></span>
+    <span class="cloud c2"></span>
+  </div>
+
+  <main>
+    <div class="brand">
+      <img class="logo" src="logo.jpg" alt="شعار كلية علوم الحاسوب والرياضيات - جامعة بحري">
+      <p>جامعة بحري</p>
+    </div>
+
+    <header class="hero">
+      <h1 dir="ltr" aria-label="From Root to Cloud">
+        <span style="--i:0">From</span>
+        <span style="--i:1">Root</span>
+        <span style="--i:2">to</span>
+        <span style="--i:3">Cloud</span>
+      </h1>
+      <p class="lead">ورشة عملية: من أول ملف تكتبه في VS Code إلى موقع يعمل على الإنترنت.</p>
+
+      <div class="term" dir="ltr" aria-hidden="true">
+        <span class="prompt">$</span>
+        <span id="typed"></span><span class="caret"></span>
+      </div>
+
+      <dl class="details">
+        <div><dt>التاريخ</dt><dd>يُعلن قريبًا</dd></div>
+        <div><dt>المكان</dt><dd>يُعلن قريبًا</dd></div>
+      </dl>
+    </header>
+
+    <section class="journey" aria-labelledby="path-title">
+      <h2 id="path-title">مسار الورشة</h2>
+      <ol class="path">
+        <li data-n="1">
+          <h3>VS Code</h3>
+          <p>نفتح المحرر وننشئ ملفاتنا الأولى.</p>
+        </li>
+        <li data-n="2">
+          <h3>GitHub</h3>
+          <p>نرفع الملفات ونتعلم كيف نعمل معًا على المشروع نفسه.</p>
+        </li>
+        <li data-n="3">
+          <h3>الاستضافة</h3>
+          <p>ننشر الموقع من GitHub ليفتحه أي شخص برابط.</p>
+        </li>
+        <li data-n="4">
+          <h3>سوق العمل</h3>
+          <p>نتحدث عن الفرص والمهارات المطلوبة اليوم.</p>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ورشة From Root to Cloud</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
