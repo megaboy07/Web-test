@@ -1,54 +1,257 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ===== الألوان والخطوط ===== */
+:root {
+  --ink: #10202f;
+  --muted: #4b6277;
+  --soil: #7a4a1f;
+  --leaf: #3d7a35;
+  --blue: #1566d6;
+  --sky-top: #cfe9ff;
+  --sky-bottom: #f7fbff;
+  --cloud: rgba(255, 255, 255, .9);
+  --footer-bg: #2b1b0e;
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "IBM Plex Sans Arabic", system-ui, "Segoe UI", Tahoma, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light dark;
 }
 
-html,
-body {
-  height: 100%;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #eaf4ff;
+    --muted: #a9c0d6;
+    --soil: #d19a5c;
+    --leaf: #7ccf6e;
+    --blue: #5aa8ff;
+    --sky-top: #0a1830;
+    --sky-bottom: #14365e;
+    --cloud: rgba(143, 180, 220, .22);
+  }
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
+  font-family: var(--body);
+  color: var(--ink);
+  line-height: 1.8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sky-bottom);
+}
+
+main {
+  flex: 1;
+  width: min(60rem, 100% - 2rem);
+  margin-inline: auto;
+}
+
+/* ===== السماء والغيوم ===== */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom) 75%);
+}
+
+.cloud {
+  position: absolute;
+  left: 0;
+  width: 170px;
+  height: 48px;
+  border-radius: 48px;
+  background: var(--cloud);
+  animation: drift linear infinite;
+}
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+.cloud::before { width: 70px; height: 70px; top: -34px; left: 28px; }
+.cloud::after  { width: 52px; height: 52px; top: -22px; right: 28px; }
+
+.c1 { top: 12%; animation-duration: 140s; }
+.c2 { top: 28%; transform: scale(.7); animation-duration: 200s; animation-delay: -90s; }
+
+@keyframes drift {
+  from { translate: -260px 0; }
+  to   { translate: calc(100vw + 260px) 0; }
+}
+
+/* ===== شعار الكلية ===== */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding-top: 1.6rem;
+}
+.logo {
+  height: 7.5rem;
+  width: auto;
+  border-radius: 14px;
+  background: #fff;
+}
+.brand p {
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--muted);
+}
+
+/* ===== البداية: العنوان ===== */
+.hero {
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 48px;
-  padding: 20px;
-  background-color: #0b3d2e; /* أخضر أدغال */
-  color: #eaffd0;
-  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-  overflow: hidden;
+  text-align: center;
+  padding-block: 4rem 3rem;
 }
 
 h1 {
-  font-size: clamp(2.2rem, 9vw, 6rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -1px;
-  text-align: center;
-  color: #eaffd0;
-}
-
-#enter {
-  padding: 16px 52px;
-  font-family: inherit;
-  font-size: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0 .28em;
+  font-family: var(--display);
   font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #0b3d2e;
-  background-color: #c8ff4d;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 6px 0 #6b8f1e;
-  /* الحركة الانسيابية بدل الظهور المفاجئ */
-  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+  font-size: clamp(2.8rem, 10vw, 6.5rem);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  padding-top: .5em;
 }
 
-#enter:hover {
-  background-color: #d9ff75;
+/* الكلمات تتدرّج من التربة إلى السماء وتصعد درجة درجة */
+h1 span {
+  --lift: calc(var(--i) * -.13em);
+  color: var(--c);
+  translate: 0 var(--lift);
+  animation: climb .9s cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: calc(var(--i) * .16s);
 }
+h1 span:nth-child(1) { --c: var(--soil); }
+h1 span:nth-child(2) { --c: var(--leaf); }
+h1 span:nth-child(3) { --c: var(--muted); font-weight: 800; }
+h1 span:nth-child(4) { --c: var(--blue); }
+
+@keyframes climb {
+  from { translate: 0 0; opacity: 0; }
+  to   { translate: 0 var(--lift); opacity: 1; }
+}
+
+.lead {
+  max-width: 34rem;
+  margin-top: 1.6rem;
+  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+  color: var(--muted);
+}
+
+/* ===== سطر الأوامر ===== */
+.term {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  min-width: 17rem;
+  margin-top: 1.8rem;
+  padding: .7rem 1.1rem;
+  border-radius: 8px;
+  background: #0d1b2a;
+  color: #d6ecff;
+  font: 500 1rem/1.4 var(--mono);
+  text-align: left;
+}
+.prompt { color: #5ee0a0; }
+.caret {
+  width: .6ch;
+  height: 1.15em;
+  background: #d6ecff;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ===== التاريخ والمكان ===== */
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem 2.5rem;
+  margin-top: 2rem;
+}
+.details dt { font-size: .85rem; color: var(--muted); }
+.details dd { font-weight: 600; font-size: 1.1rem; }
+
+/* ===== مسار الورشة ===== */
+.journey { padding-block: 2rem 4rem; }
+
+.journey h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.path {
+  list-style: none;
+  position: relative;
+  max-width: 32rem;
+  margin: 2.2rem auto 0;
+  padding-inline-start: 3.4rem;
+}
+.path::before {
+  content: "";
+  position: absolute;
+  inset-block: 1rem 1.5rem;
+  inset-inline-start: calc(1.05rem - 1.5px);
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--soil), var(--leaf), var(--blue));
+}
+
+.path li { position: relative; padding-bottom: 1.8rem; }
+.path li::before {
+  content: attr(data-n);
+  position: absolute;
+  inset-inline-start: -3.4rem;
+  top: .1rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--c);
+  color: #fff;
+  font: 500 .95rem/1 var(--mono);
+}
+.path li:nth-child(1) { --c: #7a4a1f; }
+.path li:nth-child(2) { --c: #3d7a35; }
+.path li:nth-child(3) { --c: #2b76ad; }
+.path li:nth-child(4) { --c: #1566d6; }
+
+.path h3 { font-size: 1.2rem; font-weight: 600; line-height: 1.5; }
+.path p { color: var(--muted); }
+
+/* ===== الجذور (التذييل) ===== */
+footer {
+  padding: 1.6rem 1rem;
+  background: var(--footer-bg);
+  color: #e9d9c6;
+  text-align: center;
+  font-size: .9rem;
+}
+
+/* ===== للشاشات الصغيرة ===== */
+@media (max-width: 560px) {
+  h1 span { --lift: 0em; }
+}
+
+/* ===== تقليل الحركة ===== */
+@media (prefers-reduced-motion: reduce) {
+  .cloud, .caret, h1 span { animation: none; }
+}
+
+
+        
